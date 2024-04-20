@@ -43,7 +43,7 @@ for car_id in np.unique(results['car_id']):
                              'license_plate_number': results[(results['car_id'] == car_id) &
                                                              (results['license_number_score'] == max_)]['license_number'].iloc[0]}
     cap.set(cv2.CAP_PROP_POS_FRAMES, results[(results['car_id'] == car_id) &
-                                             (results['license_number_score'] == max_)]['frame_nmr'].iloc[0])
+                                             (results['license_number_score'] == max_)]['frame_num'].iloc[0])
     ret, frame = cap.read()
 
     x1, y1, x2, y2 = ast.literal_eval(results[(results['car_id'] == car_id) &
@@ -55,7 +55,7 @@ for car_id in np.unique(results['car_id']):
     license_plate[car_id]['license_crop'] = license_crop
 
 
-frame_nmr = -1
+frame_num = -1
 
 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
@@ -63,9 +63,9 @@ cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 ret = True
 while ret:
     ret, frame = cap.read()
-    frame_nmr += 1
+    frame_num += 1
     if ret:
-        df_ = results[results['frame_nmr'] == frame_nmr]
+        df_ = results[results['frame_num'] == frame_num]
         for row_indx in range(len(df_)):
             # draw car
             car_x1, car_y1, car_x2, car_y2 = ast.literal_eval(df_.iloc[row_indx]['car_bbox'].replace('[ ', '[').replace('   ', ' ').replace('  ', ' ').replace(' ', ','))
